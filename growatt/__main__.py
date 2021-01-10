@@ -2,8 +2,13 @@ import sys
 import datetime
 from growatt import hash_password, GrowattApi, Timespan
 
-username = sys.argv[1]
-password = sys.argv[2]
+#username = sys.argv[1]
+#password = sys.argv[2]
+
+username = "solienergiasolar"
+password = "soli2020"
+
+
 
 with GrowattApi() as api:
     api.login(username, password)
