@@ -26,12 +26,20 @@ with GrowattApi() as api:
     #print(plant_detail)
 
 app = Flask(__name__)
+api = Api(app)
 
 @app.route('/')
 def server():
     if request.headers.get('Authorization') == '42':
         return jsonify({"42": "a resposta para a vida, o universo e tudo mais"})
     return jsonify(plant_detail)
+
+class Plants(Resource):
+    def get(self):
+        return jsonify(plant_info)
+
+
+api.add_resource(Plants, '/plants') # Route_2
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
