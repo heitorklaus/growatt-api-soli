@@ -14,8 +14,6 @@ from growatt import hash_password, GrowattApi, Timespan
 username = "solienergiasolar"
 password = "soli2020"
 
-
-
 with GrowattApi() as api:
     api.login(username, password)
     plant_info = api.plant_list()
@@ -24,6 +22,8 @@ with GrowattApi() as api:
     plant_id = plant_info["data"][0]["plantId"]
     plant_detail = api.plant_detail(plant_id, Timespan.day, datetime.date.today())
     #print(plant_detail)
+
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -38,6 +38,23 @@ class Plants(Resource):
     def get(self):
         return jsonify(plant_info)
 
+
+class Usera(Resource):
+    def get(self, userid):
+        with GrowattApi() as api:
+            api.login(username, password)
+            plant_info = api.plant_list()
+    #print(plant_info)
+
+            plant_id = userid
+            plant_detail = api.plant_detail(plant_id, Timespan.day, datetime.date.today())
+            return jsonify(plant_detail)
+    #print(plant_detail)
+
+
+
+ 
+api.add_resource(Usera, '/plants/<string:userid>')
 
 api.add_resource(Plants, '/plants') # Route_2
 
